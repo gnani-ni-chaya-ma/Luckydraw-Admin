@@ -1,0 +1,13 @@
+<div class="" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="" fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon class="material-icons-outlined mr-8 ml-8">
+      {{ data?.icon }}
+    </mat-icon>
+    <span class="h4">
+      {{ data?.message }}
+    </span>
+  </div>
+  <button *ngIf="data?.showCloseButton" mat-icon-button class="ml-2 p-0" (click)="close()">
+    <mat-icon class="material-icons-outlined">close</mat-icon>
+  </button>
+</div>
