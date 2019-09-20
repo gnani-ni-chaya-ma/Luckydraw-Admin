@@ -15,9 +15,6 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start center">
         <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
-          Yesterday
-        </div>
-        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
           Today
         </div>
       </div>
@@ -45,7 +42,7 @@
     </div>
 
     <div class="position-relative h-400 pb-16">
-      <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget.colorScheme" [results]="widget.mainChart['TW']" [legend]="widget.showLegend"
+      <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget.colorScheme" [doughnut]="true" [labels]="true" [results]="widget.mainChart['TW']" [legend]="widget.showLegend"
         [labels]="widget.labels">
       </ngx-charts-pie-chart>
     </div>
