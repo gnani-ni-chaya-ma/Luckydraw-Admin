@@ -1,3 +1,66 @@
-<p>
-  list works!
-</p>
+<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+
+    <!-- Username Column -->
+    <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="text-truncate font-weight-600">{{contact.username}}</p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- ContactNumber Column -->
+    <ng-container matColumnDef="contactNumber">
+        <mat-header-cell *matHeaderCellDef>Mobile</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="text-truncate">
+                {{contact.contactNumber}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Points Column -->
+    <ng-container matColumnDef="points">
+        <mat-header-cell *matHeaderCellDef>Points</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="phone text-truncate">
+                {{contact.points}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- QuestionState Column -->
+    <ng-container matColumnDef="questionState">
+        <mat-header-cell *matHeaderCellDef>QuestionState</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="job-title text-truncate">
+                {{contact.questionState}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Buttons Column -->
+    <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <div fxFlex="row" fxLayoutAlign="end center">
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                    (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item aria-label="remove" (click)="deleteContact(contact)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Remove</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let contact; columns: displayedColumns;" class="contact" (click)="editContact(contact)"
+        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+    </mat-row>
+</mat-table>

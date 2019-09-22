@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -84,5 +83,19 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     logout() {
         this._authService.logout();
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Toggle sidebar open
+     *
+     * @param key
+     */
+    toggleSidebarOpen(key): void
+    {
+        this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 }
