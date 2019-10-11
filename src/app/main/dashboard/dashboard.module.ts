@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -9,9 +9,10 @@ import { FuseWidgetModule } from '@fuse/components';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatMenuModule, MatSelectModule } from '@angular/material';
+import { CountComponent } from './count/count.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, CountComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -27,6 +28,9 @@ import { MatButtonModule, MatFormFieldModule, MatIconModule, MatMenuModule, MatS
 
     FuseSharedModule,
     FuseWidgetModule
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class DashboardModule { }

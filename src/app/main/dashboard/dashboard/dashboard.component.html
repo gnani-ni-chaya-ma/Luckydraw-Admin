@@ -1,67 +1,36 @@
-<div class="page-layout blank p-24" fusePerfectScrollbar>
+<div #dashboard class="page-layout blank p-24" fusePerfectScrollbar>
 
   <h2>Dashboard</h2>
 
+  <div class="content">
 
-  <div class="pt-48 pb-24 font-size-18 font-weight-300">
-    How many pages your users visit?
-  </div>
+    <!-- <div class="font-size-72">
+        😁
+    </div> -->
 
-  <div class="fuse-card auto-width">
-
-    <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="column" fxLayoutAlign="start start">
-        <span class="h2">Visitors & Page views</span>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer">
-          Today
-        </div>
-      </div>
+    <div class="py-16 font-size-18 font-weight-300">
+      Questionstste wise statistics
     </div>
 
-    <div class="position-relative h-368 pb-16">
-      <canvas baseChart [datasets]="datasets" [labels]="labels" [options]="options" [chartType]="chartType">
-      </canvas>
-    </div>
+    <div fxLayout="row wrap">
 
-  </div>
-
-
-  <div class="pt-48 pb-24 font-size-18 font-weight-300">
-    How many pages your users visit?
-  </div>
-
-
-  <div class="fuse-card auto-width">
-
-    <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="column" fxLayoutAlign="start start">
-        <span class="h2">Visitors & Page views</span>
-      </div>
-    </div>
-
-    <div class="position-relative h-400 pb-16">
-      <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget.colorScheme" [doughnut]="true" [labels]="true" [results]="widget.mainChart['TW']" [legend]="widget.showLegend"
-        [labels]="widget.labels">
-      </ngx-charts-pie-chart>
-    </div>
-
-    <div class="py-8 mh-16 border-top" fxLayout="row wrap" fxLayoutAlign="start center">
-
-      <div class="py-8 border-right" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
-        <span class="mat-display-1 mb-0">
-          412
-        </span>
-        <span class="h4">Task Added</span>
+      <div *ngFor="let bloc of statistics">
+        <count [count]="bloc.value" [title]="bloc._id"></count>
       </div>
 
-      <div class="py-8" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
-        <span class="mat-display-1 mb-0">
-          152
-        </span>
-        <span class="h4">Task Completed</span>
+    </div>
+
+
+    <div class="py-16 font-size-18 font-weight-300">
+      Draw slots wise statistics
+    </div>
+
+    <div fxLayout="row wrap">
+
+      <div *ngFor="let bloc of draws">
+        <count [count]="bloc.value" [title]="getFormattedDate(bloc._id.$date)" [footer]="'Coupon(s)'"></count>
       </div>
+
     </div>
 
   </div>
