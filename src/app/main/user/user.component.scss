@@ -90,6 +90,11 @@
         .mat-column-buttons {
             flex-basis: 80px;
         }
+
+        .user {
+            position: relative;
+            cursor: pointer;
+        }
     }
 
 }
