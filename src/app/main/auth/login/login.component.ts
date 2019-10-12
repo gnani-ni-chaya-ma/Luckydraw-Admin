@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { AuthService } from 'app/main/_service';
+import { AuthService, NotificationService } from 'app/main/_service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
 
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private _fuseProgressBarService: FuseProgressBarService,
+    private _notificationService: NotificationService,
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
@@ -78,14 +79,19 @@ export class LoginComponent implements OnInit {
   async login() {
     try {
       this._fuseProgressBarService.show();
-      // let user = await this._authService.login(this.loginForm.value).toPromise();
-      let user = { name: 'Milan Vadher', email: 'milanvadher1996@gmail.com', id: 1 };
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this._authService.currentUserSubject.next(user);
-      this._router.navigate([this.returnUrl]);
+      if (this.loginForm.get('email').value == 'admin@gnc.com' && this.loginForm.get('password').value == 'Admin@GNC') {
+        // let user = await this._authService.login(this.loginForm.value).toPromise();
+        let user = { name: 'Admin', email: 'admin@gnc.com', id: 1 };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this._authService.currentUserSubject.next(user);
+        this._router.navigate([this.returnUrl]);
+      } else {
+        throw 'Invalid Credentials';
+      }
       this._fuseProgressBarService.hide();
     } catch (error) {
       this._fuseProgressBarService.hide();
+      this._notificationService.show(`${error}`, 'error');
       console.error('Error in LOGIN ::', error);
     }
   }

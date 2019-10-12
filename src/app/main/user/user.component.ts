@@ -15,7 +15,7 @@ import { User } from './user.model';
 })
 export class UserComponent implements OnInit {
 
-  displayedColumns = ['position', 'username', 'contactNumber', 'questionState', 'points', 'coupons', 'buttons'];
+  displayedColumns = ['position', 'username', 'contactNumber', 'questionState', 'points', 'coupons'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
