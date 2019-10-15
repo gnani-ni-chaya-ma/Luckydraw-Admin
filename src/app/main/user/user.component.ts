@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { UserService } from '../_service/user.service';
 import { NotificationService } from '../_service';
+import { DetailComponent } from './detail/detail.component';
+import { User } from './user.model';
 
 @Component({
   selector: 'app-user',
@@ -14,34 +15,49 @@ import { NotificationService } from '../_service';
 })
 export class UserComponent implements OnInit {
 
-  displayedColumns = ['position', 'username', 'contactNumber', 'questionState', 'points', 'buttons'];
+  displayedColumns = ['position', 'username', 'contactNumber', 'questionState', 'points', 'coupons'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  dialogRef: any;
+
   constructor(
-    private userService: UserService,
-    private notificationService: NotificationService
+    private _userService: UserService,
+    private _notificationService: NotificationService,
+    private _matDialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.getUsers();
   }
 
+  setCustomSort() {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'coupons':
+          return item.earnedTickets.length + item.ticketMapping.length;
+        default:
+          return item[property];
+      }
+    }
+  }
+
   setTableData(users: User[]) {
     this.dataSource = new MatTableDataSource(users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.setCustomSort();
   }
 
   async getUsers() {
     try {
-      const result = await this.userService.getUserList().toPromise();
+      const result = await this._userService.getUserList().toPromise();
       console.log('Users', result.users);
       this.setTableData(result.users);
     } catch (error) {
-      this.notificationService.show(`${error}`, 'error');
+      this._notificationService.show(`${error}`, 'error');
     }
   }
 
@@ -52,14 +68,11 @@ export class UserComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
 
-export interface User {
-  username: string;
-  ak_ques_st: number;
-  contactNumber: string;
-  earnedTickets: number[];
-  points: number;
-  questionState: number;
-  ticketMapping: any[];
+  showDetails(user: User) {
+    this.dialogRef = this._matDialog.open(DetailComponent, {
+      panelClass: 'user-details-dialog',
+      data: user,
+    });
+  }
 }

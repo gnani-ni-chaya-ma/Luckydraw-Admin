@@ -5,7 +5,6 @@ import { FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { ContentModule } from 'app/layout/components/content/content.module';
-import { FooterModule } from 'app/layout/components/footer/footer.module';
 import { NavbarModule } from 'app/layout/components/navbar/navbar.module';
 import { ToolbarModule } from 'app/layout/components/toolbar/toolbar.module';
 
@@ -22,7 +21,6 @@ import { VerticalLayout1Component } from 'app/layout/vertical/layout-1/layout-1.
         FuseSidebarModule,
 
         ContentModule,
-        FooterModule,
         NavbarModule,
         ToolbarModule
     ],

@@ -1,0 +1,60 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">{{dialogTitle}}</span>
+      <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+
+    <!-- UnAssign Coupon -->
+    <div class="pb-12">
+
+      <div class="mat-title">
+        Un-Assigned Coupons
+      </div>
+
+      <div class="mat-subheading-1" *ngIf="user.earnedTickets?.length; else elseBlock">
+        {{user.earnedTickets.join(', ')}}
+      </div>
+
+    </div>
+    <!-- / UnAssign Coupon -->
+
+    <!-- Assign Coupon -->
+    <div class="pb-12">
+
+      <div class="mat-title">
+        Assign Coupons
+      </div>
+
+      <table class="simple" *ngIf="assignCoupons?.length; else elseBlock">
+        <thead>
+          <tr>
+            <th> Date </th>
+            <th class="text-left">Coupons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coupon of assignCoupons">
+            <td>{{coupon[0] | date: 'medium'}}</td>
+            <td class="text-left">{{getCoupon(coupon[1])}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <!-- / Assign Coupon -->
+
+    <ng-template #elseBlock>
+      <div class="py-12">
+        No coupons available
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>

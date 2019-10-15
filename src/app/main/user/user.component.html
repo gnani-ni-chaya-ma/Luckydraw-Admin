@@ -53,7 +53,7 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="position">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-                    <mat-cell *matCellDef="let contact; let i = index">
+                    <mat-cell *matCellDef="let user; let i = index">
                         <p class="text-truncate font-weight-600">{{i+1}}</p>
                     </mat-cell>
                 </ng-container>
@@ -61,17 +61,17 @@
                 <!-- Username Column -->
                 <ng-container matColumnDef="username">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-                    <mat-cell *matCellDef="let contact">
-                        <p class="text-truncate font-weight-600">{{contact.username}}</p>
+                    <mat-cell *matCellDef="let user">
+                        <p class="text-truncate font-weight-600">{{user.username}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- ContactNumber Column -->
                 <ng-container matColumnDef="contactNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
-                    <mat-cell *matCellDef="let contact">
+                    <mat-cell *matCellDef="let user">
                         <p class="text-truncate">
-                            {{contact.contactNumber}}
+                            {{user.contactNumber}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -79,27 +79,40 @@
                 <!-- QuestionState Column -->
                 <ng-container matColumnDef="questionState">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>QuestionState</mat-header-cell>
-                    <mat-cell *matCellDef="let contact">
-                        <p class="job-title text-truncate">
-                            {{contact.questionState}}
-                        </p>
+                    <mat-cell *matCellDef="let user">
+                        <span class="quantity-indicator text-truncate"
+                            [ngClass]="{'red-500':user.questionState < 25, 'amber-500':user.questionState < 50 && user.questionState >= 25,'green-600':user.questionState > 50}">
+                        </span>
+                        <span class="job-title text-truncate">
+                            {{user.questionState}}
+                        </span>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Points Column -->
                 <ng-container matColumnDef="points">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Points</mat-header-cell>
-                    <mat-cell *matCellDef="let contact">
+                    <mat-cell *matCellDef="let user">
                         <p class="phone text-truncate">
-                            {{contact.points}}
+                            {{user.points}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Coupons Column -->
+                <ng-container matColumnDef="coupons">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Coupons</mat-header-cell>
+                    <mat-cell *matCellDef="let user">
+                        <p class="phone text-truncate">
+                            {{user.earnedTickets?.length + user.ticketMapping?.length}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Buttons Column -->
-                <ng-container matColumnDef="buttons">
+                <!-- <ng-container matColumnDef="buttons">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let contact">
+                    <mat-cell *matCellDef="let user">
                         <div fxFlex="row" fxLayoutAlign="end center">
                             <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
                                 (click)="$event.stopPropagation();">
@@ -115,12 +128,12 @@
                         </div>
 
                     </mat-cell>
-                </ng-container>
+                </ng-container> -->
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-                <mat-row *matRowDef="let contact; columns: displayedColumns;" class="contact"
-                    (click)="editContact(contact)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                <mat-row *matRowDef="let user; columns: displayedColumns;" class="user"
+                    (click)="showDetails(user)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
 
             </mat-table>
