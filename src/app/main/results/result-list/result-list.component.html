@@ -1,0 +1,158 @@
+<div id="results" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+      fxLayoutAlign.gt-xs="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            receipt
+          </mat-icon>
+          <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            Results
+          </span>
+        </div>
+
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
+        <div class="search-wrapper mt-16 mt-sm-0">
+
+          <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>search</mat-icon>
+            <input (input)="searchUser($event.target.value)" placeholder="Search for a user">
+          </div>
+
+        </div>
+
+      </div>
+      <!-- / SEARCH -->
+
+      <!-- GENERATE RESULT -->
+      <button mat-raised-button (click)="openGenerateResultDialog()"
+        class="add-product-button fuse-white mt-24 mt-md-0">
+        <span>GENERATE RESULT</span>
+      </button>
+      <!-- / GENERATE RESULT -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table class="users-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}"
+        fusePerfectScrollbar matSort>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+          <mat-cell *matCellDef="let user; let i = index">
+            <p class="text-truncate font-weight-600">{{i+1}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <p class="text-truncate font-weight-600">{{user.username}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- ContactNumber Column -->
+        <ng-container matColumnDef="contactNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <p class="text-truncate">
+              {{user.contactNumber}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- QuestionState Column -->
+        <ng-container matColumnDef="questionState">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>QuestionState</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <span class="quantity-indicator text-truncate"
+              [ngClass]="{'red-500':user.questionState < 25, 'amber-500':user.questionState < 50 && user.questionState >= 25,'green-600':user.questionState > 50}">
+            </span>
+            <span class="job-title text-truncate">
+              {{user.questionState}}
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Points Column -->
+        <ng-container matColumnDef="points">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Points</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <p class="phone text-truncate">
+              {{user.points}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Coupons Column -->
+        <ng-container matColumnDef="coupons">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Coupons</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <p class="phone text-truncate">
+              {{user.earnedTickets?.length + user.ticketMapping?.length}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <!-- <ng-container matColumnDef="buttons">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let user">
+                      <div fxFlex="row" fxLayoutAlign="end center">
+                          <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                              (click)="$event.stopPropagation();">
+                              <mat-icon class="secondary-text">more_vert</mat-icon>
+                          </button>
+
+                          <mat-menu #moreMenu="matMenu">
+                              <button mat-menu-item aria-label="remove" (click)="deleteContact(contact)">
+                                  <mat-icon>delete</mat-icon>
+                                  <span>Remove</span>
+                              </button>
+                          </mat-menu>
+                      </div>
+
+                  </mat-cell>
+              </ng-container> -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row *matRowDef="let user; columns: displayedColumns;" class="user" (click)="showDetails(user)" matRipple
+          [@animate]="{value:'*',params:{y:'100%'}}">
+        </mat-row>
+
+      </mat-table>
+
+      <mat-paginator #paginator [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+
+    </div>
+    <!-- CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>
