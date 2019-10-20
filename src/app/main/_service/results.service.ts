@@ -11,6 +11,10 @@ export class ResultsService {
   constructor(private http: HttpClient) { }
 
   getWinnerList(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/winner_list`);
+    return this.http.post(`${environment.apiUrl}/winner_list`, {});
+  }
+
+  generateResult(data: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/generateResult`, data);
   }
 }

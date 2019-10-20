@@ -1,0 +1,45 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">{{dialogTitle | date:'medium'}}</span>
+      <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="m-0" fusePerfectScrollbar id="print-section">
+
+    <table id="winners" class="simple" *ngIf="_data.result.length; else elseBlock">
+      <thead>
+        <tr>
+          <th>Prize</th>
+          <th>Ticket No</th>
+          <th>Contact No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let winner of _data.result">
+          <td>{{winner.prize}}</td>
+          <td>{{winner.ticket}}</td>
+          <td>{{winner.contactNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #elseBlock>
+      <div class="py-12 h2">
+        No winner available
+      </div>
+    </ng-template>
+
+  </div>
+
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button [disabled]="_data.result.length <= 0" color="primary" class="save-button" aria-label="PRINT"
+      (click)="printResult()">
+      PRINT
+    </button>
+  </div>
+
+</div>

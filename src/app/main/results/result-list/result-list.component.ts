@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef } from '@angular/material';
 import { NotificationService } from 'app/main/_service';
 import { ResultsService } from 'app/main/_service/results.service';
 import { Result } from '../result.model';
 import { GenerateResultComponent } from '../generate-result/generate-result.component';
+import { DetailResultComponent } from '../detail-result/detail-result.component';
+// import { DetailResultComponent } from '../detail-result/detail-result.component';
 
 @Component({
   selector: 'app-result-list',
@@ -15,13 +17,13 @@ import { GenerateResultComponent } from '../generate-result/generate-result.comp
 })
 export class ResultListComponent implements OnInit {
 
-  displayedColumns = ['position', 'username', 'contactNumber', 'questionState', 'points', 'coupons'];
+  displayedColumns = ['position', 'date', 'winners'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  dialogRef: any;
+  dialogRef: MatDialogRef<any>;
 
   constructor(
     private _resultService: ResultsService,
@@ -37,7 +39,7 @@ export class ResultListComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'coupons':
-          return item.earnedTickets.length + item.ticketMapping.length;
+          return (item.earnedTickets.length || 0) + (item.ticketMapping.length || 0);
         default:
           return item[property];
       }
@@ -54,8 +56,8 @@ export class ResultListComponent implements OnInit {
   async getResults() {
     try {
       const result = await this._resultService.getWinnerList().toPromise();
-      console.log('Results', result.users);
-      this.setTableData(result.users);
+      console.log('Results', result.winners);
+      this.setTableData(result.winners);
     } catch (error) {
       this._notificationService.show(`${error}`, 'error');
     }
@@ -69,11 +71,11 @@ export class ResultListComponent implements OnInit {
     }
   }
 
-  showDetails(user: Result) {
-    // this.dialogRef = this._matDialog.open(DetailComponent, {
-    //   panelClass: 'user-details-dialog',
-    //   data: user,
-    // });
+  showDetails(result: Result) {
+    const dialogRef = this._matDialog.open(DetailResultComponent, {
+      panelClass: 'detail-result-dialog',
+      data: result,
+    });
   }
 
   openGenerateResultDialog() {
@@ -81,6 +83,12 @@ export class ResultListComponent implements OnInit {
       panelClass: 'result-generate-dialog',
       disableClose: true,
       width: '400px'
+    });
+    this.dialogRef.afterClosed().subscribe((result: boolean) => {
+      console.log('Result :: ', result);
+      if (result) {
+        this.getResults();
+      }
     });
   }
 }

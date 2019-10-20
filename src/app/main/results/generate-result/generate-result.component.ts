@@ -3,17 +3,25 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
 import { NotificationService } from 'app/main/_service';
+import { ResultsService } from 'app/main/_service/results.service';
 
 @Component({
   selector: 'app-generate-result',
   templateUrl: './generate-result.component.html',
   styleUrls: ['./generate-result.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class GenerateResultComponent implements OnInit {
 
   dialogTitle = 'Generate Result';
   generateResultForm: FormGroup;
+  minDate = new Date(2019, 10, 7);
+  maxDate = new Date(2019, 10, 12);
+  slots = [
+    { viewValue: '06:30 PM', value: [18, 30, 0] },
+    { viewValue: '08:00 PM', value: [20, 0, 0] },
+    { viewValue: '09:30 PM', value: [21, 30, 0] },
+  ];
 
   constructor(
     public matDialogRef: MatDialogRef<GenerateResultComponent>,
@@ -21,21 +29,23 @@ export class GenerateResultComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _fuseProgressBarService: FuseProgressBarService,
     private _notificationService: NotificationService,
+    private _resultService: ResultsService,
   ) { }
 
   ngOnInit() {
     this.generateResultForm = this._formBuilder.group({
-      date: ['', Validators.required],
-      noOfDraws: ['', Validators.required],
-      draws: new FormArray([this.drawForm()]),
-      ratio: [0.5, Validators.required],
+      date: [null, Validators.required],
+      slot: [null, Validators.required],
+      noOfDraws: [null, [Validators.required, Validators.pattern(/^\d{1,2}$/)]],
+      draws: new FormArray([]),
+      ratio: [0.5, [Validators.required, Validators.pattern(/^(0(\.\d+)?|1(\.0+)?)$/)]],
     });
   }
 
   drawForm(index?): FormGroup {
     return this._formBuilder.group({
-      prize: [`${index || ''}`, Validators.required],
-      count: ['', Validators.required]
+      prize: [index, Validators.required],
+      count: [null, [Validators.required, Validators.pattern(/^\d{1,2}$/)]]
     });
   }
 
@@ -51,8 +61,24 @@ export class GenerateResultComponent implements OnInit {
     }
   }
 
-  generateResult() {
-    console.log('Generate Results', this.generateResultForm.value);
+  async generateResult() {
+    try {
+      this._fuseProgressBarService.show();
+      const formData = this.generateResultForm.value;
+      const date = Object.values(formData.date._i).reverse();
+      date[1] = Number(date[1]) + 1;
+      formData.date = [...date, ...formData.slot];
+      delete formData.noOfDraws;
+      delete formData.slot;
+      console.log('Generate Results', formData);
+      await this._resultService.generateResult(formData).toPromise();
+      this._fuseProgressBarService.hide();
+      this.matDialogRef.close(true);
+    } catch (error) {
+      this._fuseProgressBarService.hide();
+      console.error('Error', error);
+      this._notificationService.show(`${error}`, 'error');
+    }
   }
 
 }

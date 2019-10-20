@@ -47,7 +47,7 @@
 
     }
 
-    .users-table {
+    .result-table {
         flex: 1 1 auto;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
@@ -71,24 +71,16 @@
             }
         }
 
-        .mat-column-username {
+        .mat-column-position {
+            flex-basis: 100px;
+        }
+
+        .mat-column-date {
+            flex-basis: 400px;
+        }
+
+        .mat-column-winners {
             flex-basis: 200px;
-        }
-
-        .mat-column-points {
-            flex-basis: 100px;
-        }
-
-        .mat-column-contactNumber {
-            flex-basis: 150px;
-        }
-
-        .mat-column-questionState {
-            flex-basis: 100px;
-        }
-
-        .mat-column-buttons {
-            flex-basis: 80px;
         }
 
         .user {
