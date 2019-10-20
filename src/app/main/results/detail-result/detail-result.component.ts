@@ -26,46 +26,64 @@ export class DetailResultComponent implements OnInit {
   }
 
   printResult() {
-    let printContents, popupWin: Window;
-    printContents = document.getElementById('print-section').innerHTML;
+    let popupWin: Window;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
-    popupWin.document.write(`
-      <html>
-        <head>
-          <title>Print tab</title>
-          <style>
-          #winners {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-          }
-          
-          #winners td, #winners th {
-            border: 1px solid #ddd;
-            padding: 8px;
-          }
-          
-          #winners tr:nth-child(even){background-color: #f2f2f2;}
-          
-          #winners th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #4CAF50;
-            color: white;
-          }
+    popupWin.document.write(this.getContent());
+    popupWin.document.close();
+  }
 
+  getContent(): string {
+    const resultDate = `${this._datePipe.transform(this.dialogTitle, 'dd-MM-yyyy hh:mm aa')}`;
+    const printContents = document.getElementById('print-section').innerHTML;
+    return `<html>
+        <head>
+          <title>Winners_${this._datePipe.transform(this.dialogTitle, 'dd-MM-yyyy-hhmm-aa')}</title>
+          <style>
+            * {
+                font-family: "Trebuchet MS",
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+            }
+
+            #heading {
+                border: 2px solid grey;
+                text-align: center;
+            }
+
+            #winners {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #winners td,
+            #winners th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 24px;
+                border: 2px solid grey;
+            }
+
+            #winners th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                font-size: 26px;
+                border: 2px solid grey;
+            }
           </style>
         </head>
         <body onload="window.print();window.close()">
-        <div>
-          <p align="center" style="margin-top: 1em"> <font size="6" face="sans-serif"> ${this._datePipe.transform(this.dialogTitle, 'dd-MM-yyyy hh:mm aa')} Winners </font> </p>
+        <div id="heading">
+            <h1>${resultDate}</h1>
+            <h2>Luckydraw Winners</h2>
         </div>
+        <br>
         ${printContents}
         </body>
-      </html>`
-    );
-    popupWin.document.close();
+      </html>`;
   }
 }
