@@ -37,7 +37,8 @@ export class UserComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'coupons':
-          return (item.earnedTickets && item.ticketMapping) ? item.earnedTickets.length + item.ticketMapping.length : 0;
+          // return (item.earnedTickets && item.ticketMapping) ? item.earnedTickets.length + item.ticketMapping.length : 0;
+          return (item.earnedTickets && item.ticketMapping) ? item.earnedTickets.length + item.ticketMapping.length : (item.earnedTickets ? item.earnedTickets.length : (item.ticketMapping ? item.ticketMapping.length : 0));
         default:
           return item[property];
       }
