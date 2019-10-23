@@ -1,0 +1,92 @@
+@import "src/@fuse/scss/fuse";
+
+#results {
+    overflow-x: auto;
+
+    .top-bg {
+
+        @include media-breakpoint('lt-md') {
+            height: 256px;
+        }
+    }
+
+    >.center {
+
+        .header {
+
+            .search-wrapper {
+                width: 100%;
+                max-width: 480px;
+                border-radius: 28px;
+                overflow: hidden;
+                @include mat-elevation(1);
+                background: #303030;
+
+                .search {
+                    width: 100%;
+                    height: 48px;
+                    line-height: 48px;
+                    padding: 0 18px;
+                    background: #424242;
+
+                    input {
+                        width: 100%;
+                        height: 48px;
+                        min-height: 48px;
+                        max-height: 48px;
+                        padding: 0 16px;
+                        border: none;
+                        outline: none;
+                        background: #424242;
+                        color: #fff;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    .result-table {
+        flex: 1 1 auto;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+
+        .mat-header-row {
+            min-height: 64px;
+        }
+
+        .quantity-indicator {
+            display: inline-block;
+            vertical-align: middle;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+
+            &+span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+
+        .mat-column-position {
+            flex-basis: 100px;
+        }
+
+        .mat-column-date {
+            flex-basis: 400px;
+        }
+
+        .mat-column-winners {
+            flex-basis: 200px;
+        }
+
+        .user {
+            position: relative;
+            cursor: pointer;
+        }
+    }
+
+}

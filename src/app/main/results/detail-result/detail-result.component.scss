@@ -1,6 +1,6 @@
 @import "src/@fuse/scss/fuse";
 
-.user-details-dialog {
+.detail-result-dialog {
 
     @include media-breakpoint('xs') {
         width: 100%;
@@ -12,6 +12,10 @@
 
     .mat-dialog-container {
         padding: 0;
+
+        mat-form-field {
+            width: 100%;
+        }
 
         table {
             width: 100%;

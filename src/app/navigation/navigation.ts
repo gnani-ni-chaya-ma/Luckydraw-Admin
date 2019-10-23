@@ -19,6 +19,13 @@ export const navigation: FuseNavigation[] = [
                 type     : 'item',
                 icon     : 'supervisor_account',
                 url      : '/user',
+            },
+            {
+                id       : 'result',
+                title    : 'Results',
+                type     : 'item',
+                icon     : 'receipt',
+                url      : '/results',
             }
         ]
     }

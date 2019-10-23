@@ -41,6 +41,11 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
     },
     {
+        path: 'results',
+        loadChildren: './main/results/results.module#ResultsModule',
+        canActivate: [AuthGuard],
+    },
+    {
         path: 'auth',
         loadChildren: './main/auth/auth.module#AuthModule'
     },

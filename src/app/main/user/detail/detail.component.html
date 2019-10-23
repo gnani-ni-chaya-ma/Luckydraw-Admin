@@ -41,7 +41,7 @@
         <tbody>
           <tr *ngFor="let coupon of assignCoupons">
             <td>{{coupon[0] | date: 'medium'}}</td>
-            <td class="text-left">{{getCoupon(coupon[1])}}</td>
+            <td class="text-left">{{getCoupon(coupon[1]).join(', ')}}</td>
           </tr>
         </tbody>
       </table>

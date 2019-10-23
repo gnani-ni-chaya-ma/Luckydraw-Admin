@@ -1,0 +1,104 @@
+<div id="results" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+      fxLayoutAlign.gt-xs="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            receipt
+          </mat-icon>
+          <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            Results
+          </span>
+        </div>
+
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
+        <div class="search-wrapper mt-16 mt-sm-0">
+
+          <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>search</mat-icon>
+            <input (input)="searchUser($event.target.value)" placeholder="Search for a user">
+          </div>
+
+        </div>
+
+      </div>
+      <!-- / SEARCH -->
+
+      <!-- GENERATE RESULT -->
+      <button mat-raised-button (click)="openGenerateResultDialog()"
+        class="add-product-button fuse-white mt-24 mt-md-0">
+        <span>GENERATE RESULT</span>
+      </button>
+      <!-- / GENERATE RESULT -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table class="result-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}"
+        fusePerfectScrollbar matSort>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+          <mat-cell *matCellDef="let result; let i = index">
+            <p class="text-truncate font-weight-600">{{i+1}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+          <mat-cell *matCellDef="let result">
+            <p class="text-truncate font-weight-600">{{result.date.$date | date:'medium'}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Winners Column -->
+        <ng-container matColumnDef="winners">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>No of Wineers</mat-header-cell>
+          <mat-cell *matCellDef="let result">
+            <p class="text-truncate">
+              {{result.result.length || 0}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row *matRowDef="let result; columns: displayedColumns;" class="user" (click)="showDetails(result)"
+          matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+        </mat-row>
+
+      </mat-table>
+
+      <mat-paginator #paginator [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+
+    </div>
+    <!-- CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>
