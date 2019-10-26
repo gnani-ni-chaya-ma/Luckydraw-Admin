@@ -10,9 +10,10 @@ import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatMenuModule, MatSelectModule } from '@angular/material';
 import { CountComponent } from './count/count.component';
+import { DrawsCountComponent } from './draws-count/draws-count.component';
 
 @NgModule({
-  declarations: [DashboardComponent, CountComponent],
+  declarations: [DashboardComponent, CountComponent, DrawsCountComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

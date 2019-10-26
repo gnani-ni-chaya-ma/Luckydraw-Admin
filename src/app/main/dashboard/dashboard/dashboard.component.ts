@@ -30,8 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // this.statistics[this.statistics.indexOf('<50')] = '😐';
       // this.statistics[this.statistics.indexOf('=0')] = '😔';
       this.draws = data.draws;
-      // console.log('statistics :: ', this.statistics);
       console.log('Getting Data ...');
+      console.log('statistics :: ', this.draws);
     });
   }
 

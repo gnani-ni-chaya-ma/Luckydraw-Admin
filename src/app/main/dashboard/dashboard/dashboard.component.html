@@ -28,7 +28,7 @@
     <div fxLayout="row wrap">
 
       <div *ngFor="let bloc of draws">
-        <count [count]="bloc.value" [title]="getFormattedDate(bloc._id.$date)" [footer]="'Coupon(s)'"></count>
+        <draws-count [appCount]="bloc.value.app" [onGround]="bloc.value.onGound" [title]="getFormattedDate(bloc._id.$date)" [footer]="'Coupon(s)'"></draws-count>
       </div>
 
     </div>

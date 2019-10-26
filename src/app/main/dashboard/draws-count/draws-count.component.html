@@ -1,15 +1,16 @@
 <fuse-widget class="widget" fxLayout="column">
 
   <!-- Front -->
-  <div class="fuse-widget-front mat-white-bg mat-elevation-z0" style="min-width: 170px;">
+  <div class="fuse-widget-front mat-white-bg mat-elevation-z0" style="min-width: 220px;">
 
     <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
       <div class="h3 font-weight-400 text-capitalize">{{title || ''}}</div>
     </div>
 
     <div class="pt-12 pb-32" fxLayout="column" fxLayoutAlign="center center">
-      <div class="orange-fg font-size-40 line-height-32 font-weight-300">
-        {{count || 0}}
+      <div class="warn-fg font-size-36 line-height-36 font-weight-300">
+        <span class="light-green-fg" title="App">{{appCount || 0 }}</span> | <span class="amber-fg"
+          title="On-Ground"> {{ onGround || 0 }} </span>
       </div>
       <div class="h3 pt-20 secondary-text font-weight-500 text-uppercase">{{footer ? footer : (title || '')}}</div>
     </div>
